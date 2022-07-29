@@ -9,7 +9,9 @@
 export default {
   props: { itemTitle: String, itemContent: String, price: Number },
 	mounted(){
-		console.log(this.itemTitle)
+		setTimeout(()=>{
+this.itemTitle
+		},1500)
 	}
 };
 </script>

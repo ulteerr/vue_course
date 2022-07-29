@@ -5273,7 +5273,11 @@ __webpack_require__.r(__webpack_exports__);
     price: Number
   },
   mounted: function mounted() {
-    console.log(this.itemTitle);
+    var _this = this;
+
+    setTimeout(function () {
+      _this.itemTitle;
+    }, 1500);
   }
 });
 
@@ -5298,42 +5302,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      bookable1: {
-        title: "Cheap Villa",
-        content: "A very cheap villa"
-      },
-      bookable2: {
-        title: "Cheap Villa2",
-        content: "A very cheap villa2"
-      }
+      bookables: null,
+      loading: false
     };
   },
-  // beforeCreate() {
-  //   console.log("before created");
-  // },
   created: function created() {
     var _this = this;
 
-    console.log("created");
-    console.log(this.bookable1);
-    console.log(this.bookable2);
+    this.loading = true;
     setTimeout(function () {
-      _this.bookable1.title = 'Expensive Villa';
-      _this.bookable2.title = 'Very Expensive Villa';
-    }, 5000);
-  } // beforeMount() {
-  //   console.log("before mount");
-  // },
-  // mounted() {
-  //   console.log("mounted");
-  // },
-  // beforeDestroy() {
-  //   console.log("before destroy");
-  // },
-  // destroyed() {
-  //   console.log("destroy");
-  // },
-
+      _this.bookables = [{
+        id: 1,
+        title: "Cheap Villa !!!",
+        content: "A very cheap villa"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }];
+      _this.loading = false;
+    }, 2000);
+  }
 });
 
 /***/ }),
@@ -5460,19 +5448,16 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("bookable-list-item", {
-    attrs: {
-      "item-title": _vm.bookable1.title,
-      "item-content": _vm.bookable1.content,
-      price: 10000
-    }
-  }), _vm._v(" "), _c("bookable-list-item", {
-    attrs: {
-      "item-title": _vm.bookable2.title,
-      "item-content": _vm.bookable2.content,
-      price: 10000
-    }
-  })], 1);
+  return _c("div", [_vm.loading ? _c("div", [_vm._v("Data is loading...")]) : _c("div", _vm._l(_vm.bookables, function (bookable, index) {
+    return _c("bookable-list-item", {
+      key: index,
+      attrs: {
+        "item-title": bookable.title,
+        "item-content": bookable.content,
+        price: 1000
+      }
+    });
+  }), 1)]);
 };
 
 var staticRenderFns = [];
