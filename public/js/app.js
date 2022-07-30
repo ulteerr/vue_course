@@ -5271,13 +5271,6 @@ __webpack_require__.r(__webpack_exports__);
     itemTitle: String,
     itemContent: String,
     price: Number
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    setTimeout(function () {
-      _this.itemTitle;
-    }, 1500);
   }
 });
 
@@ -5303,8 +5296,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       bookables: null,
-      loading: false
+      loading: false,
+      columns: 3
     };
+  },
+  computed: {
+    rows: function rows() {
+      return this.bookables === null ? 0 : Math.ceil(this.bookables.length / this.columns);
+    }
   },
   created: function created() {
     var _this = this;
@@ -5315,6 +5314,24 @@ __webpack_require__.r(__webpack_exports__);
         id: 1,
         title: "Cheap Villa !!!",
         content: "A very cheap villa"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }, {
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
       }, {
         title: "Cheap Villa 2",
         content: "A very cheap villa 2"
@@ -5423,7 +5440,15 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("h1", [_vm._v(_vm._s(_vm.itemTitle))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.itemContent))])]);
+  return _c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "card-title"
+  }, [_vm._v(_vm._s(_vm.itemTitle))]), _vm._v(" "), _c("p", {
+    staticClass: "card-text"
+  }, [_vm._v(_vm._s(_vm.itemContent))])])]);
 };
 
 var staticRenderFns = [];
@@ -5448,7 +5473,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_vm.loading ? _c("div", [_vm._v("Data is loading...")]) : _c("div", _vm._l(_vm.bookables, function (bookable, index) {
+  return _c("div", [_vm._v("\n  Rows is: " + _vm._s(_vm.rows) + "\n  "), _vm.loading ? _c("div", [_vm._v("Data is loading...")]) : _c("div", _vm._l(_vm.bookables, function (bookable, index) {
     return _c("bookable-list-item", {
       key: index,
       attrs: {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    Rows is: {{ rows }}
     <div v-if="loading">Data is loading...</div>
     <div v-else>
       <bookable-list-item
@@ -18,13 +19,21 @@ import BookableListItem from "./BookableListItem";
 
 export default {
   components: {
-    BookableListItem
+    BookableListItem,
   },
   data() {
     return {
       bookables: null,
-      loading: false
+      loading: false,
+      columns:3,
     };
+  },
+  computed:{
+    rows(){
+      return this.bookables === null
+      ? 0 
+      : Math.ceil(this.bookables.length / this.columns)
+    }
   },
   created() {
     this.loading = true;
@@ -33,15 +42,39 @@ export default {
         {
           id: 1,
           title: "Cheap Villa !!!",
-          content: "A very cheap villa"
+          content: "A very cheap villa",
         },
         {
           title: "Cheap Villa 2",
-          content: "A very cheap villa 2"
-        }
+          content: "A very cheap villa 2",
+        },
+        {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
+        {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
+          {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
+        {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
+          {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
+        {
+          title: "Cheap Villa 2",
+          content: "A very cheap villa 2",
+        },
       ];
       this.loading = false;
     }, 2000);
-  }
+  },
 };
 </script>
