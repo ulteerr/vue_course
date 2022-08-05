@@ -5269,7 +5269,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     itemTitle: String,
-    itemContent: String,
+    itemDescription: String,
     price: Number
   }
 });
@@ -5317,6 +5317,30 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.loading = true;
+    var p = new Promise(function (resolve, reject) {
+      console.log(resolve);
+      console.log(reject);
+      setTimeout(function () {
+        resolve("Hello");
+      }, 3000);
+    }).then(function (result) {
+      return "Hello again" + result;
+    }).then(function (result) {
+      return console.log(result);
+    })["catch"](function (result) {
+      return console.log("Error ".concat(result));
+    });
+    console.log(p);
+    var request = axios.get("/api/bookables").then(function (response) {
+      _this.bookables = response.data;
+
+      _this.bookables.push({
+        title: "x",
+        decription: "x"
+      });
+
+      _this.loading = false;
+    });
     setTimeout(function () {
       _this.bookables = [{
         id: 1,
@@ -5449,14 +5473,14 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "card"
+    staticClass: "card w-100"
   }, [_c("div", {
     staticClass: "card-body"
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.itemTitle))]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
-  }, [_vm._v(_vm._s(_vm.itemContent))])])]);
+  }, [_vm._v(_vm._s(_vm.itemDescription))])])]);
 };
 
 var staticRenderFns = [];
@@ -5488,11 +5512,11 @@ var render = function render() {
     }, [_vm._l(_vm.bookablesInRow(row), function (bookable, column) {
       return _c("div", {
         key: "row" + row + column,
-        staticClass: "col"
+        staticClass: "col d-flex align-items-stretch"
       }, [_c("bookable-list-item", {
         attrs: {
           "item-title": bookable.title,
-          "item-content": bookable.content,
+          "item-description": bookable.description,
           price: 1000
         }
       })], 1);
@@ -5636,12 +5660,6 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 try {
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 } catch (e) {}
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
