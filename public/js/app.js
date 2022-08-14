@@ -5340,6 +5340,20 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return _this.loading = false;
       });
+    },
+    errorFor: function errorFor(field) {
+      return this.hasErrors && this.errors[field] ? this.errors[field] : null;
+    }
+  },
+  computed: {
+    hasErrors: function hasErrors() {
+      return 422 === this.status && this.errors !== null;
+    },
+    hasAvailability: function hasAvailability() {
+      return 200 === this.status;
+    },
+    noAvailability: function noAvailability() {
+      return 400 === this.status;
     }
   }
 });
@@ -5530,6 +5544,9 @@ var render = function render() {
       expression: "from"
     }],
     staticClass: "form-control form-control-sm",
+    "class": [{
+      "is-invalid": this.errorFor("from")
+    }],
     attrs: {
       type: "text",
       name: "from",
@@ -5548,7 +5565,12 @@ var render = function render() {
         _vm.from = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._l(this.errorFor("from"), function (error, index) {
+    return _c("div", {
+      key: "from" + index,
+      staticClass: "invalid-feedback"
+    }, [_vm._v(_vm._s(error))]);
+  })], 2), _vm._v(" "), _c("div", {
     staticClass: "form-group col-md-6"
   }, [_c("label", {
     attrs: {
@@ -5562,6 +5584,9 @@ var render = function render() {
       expression: "to"
     }],
     staticClass: "form-control form-control-sm",
+    "class": [{
+      "is-invalid": this.errorFor("to")
+    }],
     attrs: {
       type: "text",
       name: "to",
@@ -5580,7 +5605,12 @@ var render = function render() {
         _vm.to = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _c("button", {
+  }), _vm._v(" "), _vm._l(this.errorFor("to"), function (error, index) {
+    return _c("div", {
+      key: "to" + index,
+      staticClass: "invalid-feedback"
+    }, [_vm._v(_vm._s(error))]);
+  })], 2)]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-secondary btn-block",
     attrs: {
       disabled: _vm.loading
@@ -11057,7 +11087,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nlabel[data-v-39d99139] {\n  font-size: 0.7rem;\n  text-transform: uppercase;\n  color: gray;\n  font-weight: bolder;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nlabel[data-v-39d99139] {\n  font-size: 0.7rem;\n  text-transform: uppercase;\n  color: gray;\n  font-weight: bolder;\n}\n.is-invalid[data-v-39d99139] {\n  border-color: #b22222;\n  background-image: none;\n}\n.invalid-feedback[data-v-39d99139] {\n  color: #b22222;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
