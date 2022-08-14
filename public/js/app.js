@@ -5315,9 +5315,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    itemTitle: String,
-    itemDescription: String,
-    price: Number
+    title: String,
+    description: String,
+    id: Number
   }
 });
 
@@ -5476,11 +5476,20 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-body"
+  }, [_c("router-link", {
+    attrs: {
+      to: {
+        name: "bookable",
+        params: {
+          id: _vm.id
+        }
+      }
+    }
   }, [_c("h5", {
     staticClass: "card-title"
-  }, [_vm._v(_vm._s(_vm.itemTitle))]), _vm._v(" "), _c("p", {
+  }, [_vm._v(_vm._s(_vm.title))])]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
-  }, [_vm._v(_vm._s(_vm.itemDescription))])])]);
+  }, [_vm._v(_vm._s(_vm.description))])], 1)]);
 };
 
 var staticRenderFns = [];
@@ -5513,13 +5522,7 @@ var render = function render() {
       return _c("div", {
         key: "row" + row + column,
         staticClass: "col"
-      }, [_c("bookable-list-item", {
-        attrs: {
-          "item-title": bookable.title,
-          "item-description": bookable.description,
-          price: 1000
-        }
-      })], 1);
+      }, [_c("bookable-list-item", _vm._b({}, "bookable-list-item", bookable, false))], 1);
     }), _vm._v(" "), _vm._l(_vm.placeholdersInRow(row), function (p) {
       return _c("div", {
         key: "placeholder" + row + p,
