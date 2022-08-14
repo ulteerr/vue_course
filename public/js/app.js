@@ -5319,6 +5319,12 @@ __webpack_require__.r(__webpack_exports__);
       from: null,
       to: null
     };
+  },
+  methods: {
+    check: function check() {
+      //
+      alert("I will check something now!");
+    }
   }
 });
 
@@ -5517,6 +5523,10 @@ var render = function render() {
       value: _vm.from
     },
     on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.check.apply(null, arguments);
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.from = $event.target.value;
@@ -5545,13 +5555,20 @@ var render = function render() {
       value: _vm.to
     },
     on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.check.apply(null, arguments);
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.to = $event.target.value;
       }
     }
   })])]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-secondary btn-block"
+    staticClass: "btn btn-secondary btn-block",
+    on: {
+      click: _vm.check
+    }
   }, [_vm._v("Check!")])]);
 };
 
