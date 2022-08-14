@@ -1,24 +1,30 @@
 <?php
 
-namespace App;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Bookable;
 
-class Booking extends Model
+class BookableAvailabilityController extends Controller
 {
-    use HasFactory;
-    protected $fillable = ['from', 'to'];
-
-    public function bookable()
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function __invoke($id, Request $request)
     {
-        return $this->belongsTo(Bookable::class);
-    }
+        $data = $request->validate([
+            'from' => 'required|date_format:Y-m-d|after_or_equal:now',
+            'to' => 'required|date_format:Y-m-d|after_or_equal:from'
+        ]);
 
-    public function scopeBetweenDates(Builder $query, $from, $to)
-    {
-        return $query->where('to', '>=', $from)
-            ->where('from', '<=', $to);
+        $bookable = Bookable::findOrFail($id);
+
+        return $bookable->availableFor($data['from'], $data['to'])
+            ? response()->json([])
+            : response()->json([], 404);
     }
 }

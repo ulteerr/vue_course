@@ -6,7 +6,6 @@ use App\Models\Bookable;
 use Illuminate\Database\Seeder;
 use App\Models\Booking;
 
-use Faker\Factory;
 
 class BookingsTableSeeder extends Seeder
 {
