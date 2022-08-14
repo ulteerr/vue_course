@@ -20,7 +20,9 @@ class CreateBookingsTable extends Migration
             $table->date('from');
             $table->date('to');
 
-            $table->unsignedBigInteger('bookable_id')->index();
+           
+            
+            $table->unsignedBigInteger('bookable_id')->index()->nullable();
             $table->foreign('bookable_id')->references('id')->on('bookables');
         });
     }
