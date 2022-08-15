@@ -20,7 +20,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedTinyInteger('rating');
             $table->text('content');
 
-            $table->unsignedBigInteger('bookable_id')->index();
+            $table->unsignedBigInteger('bookable_id')->index()->nullable();
             $table->foreign('bookable_id')->references('id')->on('bookables');
 
             $table->unsignedBigInteger('booking_id')->index()->nullable();

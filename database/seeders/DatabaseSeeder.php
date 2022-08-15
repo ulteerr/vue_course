@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             // UserSeeder::class,
             BookablesTableSeeder::class,
             BookingsTableSeeder::class,
+            ReviewsTableSeeder::class,
         ]);
     }
 }
