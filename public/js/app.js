@@ -5518,14 +5518,29 @@ __webpack_require__.r(__webpack_exports__);
       review: {
         rating: 5,
         content: null
-      }
+      },
+      existingReview: null,
+      loading: false
     };
-  } // methods: {
-  //   onRatingChanged(rating) {
-  //     console.log(rating);
-  //   }
-  // }
+  },
+  created: function created() {
+    var _this = this;
 
+    this.loading = true; // 1. If review already exists (in reviews table by id)
+
+    axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
+      return _this.existingReview = response.data.data;
+    })["catch"](function (err) {//
+    }).then(function () {
+      return _this.loading = false;
+    }); // 2. Fetch a booking by a review key
+    // 3. Store the review
+  },
+  computed: {
+    alreadyReviewed: function alreadyReviewed() {
+      return this.existingReview !== null;
+    }
+  }
 });
 
 /***/ }),
@@ -5949,7 +5964,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("div", {
+  return _c("div", [_vm.loading ? _c("div", [_vm._v("Loading...")]) : _c("div", [_vm.alreadyReviewed ? _c("div", [_c("h3", [_vm._v("You've already left a review for this booking!")])]) : _c("div", [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     staticClass: "text-muted"
@@ -5962,16 +5977,7 @@ var render = function render() {
       },
       expression: "review.rating"
     }
-  })], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-lg btn-primary btn-block"
-  }, [_vm._v("Submit")])]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     staticClass: "text-muted",
@@ -5979,14 +5985,34 @@ var staticRenderFns = [function () {
       "for": "content"
     }
   }, [_vm._v("Describe your expirience with")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.review.content,
+      expression: "review.content"
+    }],
     staticClass: "form-control",
     attrs: {
       name: "content",
       cols: "30",
       rows: "10"
+    },
+    domProps: {
+      value: _vm.review.content
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.review, "content", $event.target.value);
+      }
     }
-  })]);
-}];
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-lg btn-primary btn-block"
+  }, [_vm._v("Submit")])])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 
