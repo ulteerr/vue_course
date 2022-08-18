@@ -5413,32 +5413,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// import moment from "moment";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    bookableId: String
-  },
   data: function data() {
     return {
-      loading: false,
-      reviews: null
+      review: {
+        rating: 5,
+        content: null
+      }
     };
   },
-  created: function created() {
-    var _this = this;
-
-    this.loading = true;
-    axios.get("/api/bookables/".concat(this.bookableId, "/reviews")).then(function (response) {
-      return _this.reviews = response.data.data;
-    }).then(function () {
-      return _this.loading = false;
-    });
-  } // filters: {
-  //   fromNow(value) {
-  //     return moment(value).fromNow();
-  //   }
-  // }
-
+  created: function created() {// 1. If review already exists (in reviews table by id)
+    // 2. Fetch a booking by a review key
+    // 3. Store the review
+  }
 });
 
 /***/ }),
@@ -5556,22 +5543,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    rating: Number
+    value: Number
   },
   computed: {
     halfStar: function halfStar() {
-      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100); // console.log(fraction);
+      var fraction = Math.round((this.value - Math.floor(this.value)) * 100); // console.log(fraction);
 
       return fraction > 0 && fraction < 50;
     },
     fullStars: function fullStars() {
       // > 4.5 = 5 stars
       // 4.3 = 4 and half
-      return Math.round(this.rating);
+      return Math.round(this.value);
     },
     emptyStars: function emptyStars() {
       // if rating would be 1.9, ceil(1.9) = 2, 5 - 2 = 3, render 3 empty stars
-      return 5 - Math.ceil(this.rating);
+      return 5 - Math.ceil(this.value);
     }
   } // created() {
   //   const numbers = [0.9, 4.0, 4.4, 4.5, 4.6, 4.9];
@@ -5810,37 +5797,52 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
-    staticStyle: {
-      padding: "1.25rem"
+  return _c("div", [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    staticClass: "text-muted"
+  }, [_vm._v("Select the star rating (1 is worst - 5 is best)")]), _vm._v(" "), _c("star-rating", {
+    staticClass: "fa-3x",
+    model: {
+      value: _vm.review.rating,
+      callback: function callback($$v) {
+        _vm.$set(_vm.review, "rating", $$v);
+      },
+      expression: "review.rating"
     }
-  }, [_c("h6", {
-    staticClass: "text-uppercase text-secondary font-weight-bolder pt-4"
-  }, [_vm._v("Review List")]), _vm._v(" "), _vm.loading ? _c("div", [_vm._v("Loading...")]) : _c("div", _vm._l(_vm.reviews, function (review, index) {
-    return _c("div", {
-      key: index,
-      staticClass: "border-bottom d-none d-md-block"
-    }, [_c("div", {
-      staticClass: "row pt-4"
-    }, [_c("div", {
-      staticClass: "col-md-6"
-    }, [_vm._v("Piotr Jura")]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6 d-flex justify-content-end"
-    }, [_c("star-rating", {
-      staticClass: "fa-lg",
-      attrs: {
-        rating: review.rating
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    staticClass: "text-muted",
+    attrs: {
+      "for": "content"
+    }
+  }, [_vm._v("Describe your expirience with")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.review.content,
+      expression: "review.content"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "content",
+      cols: "30",
+      rows: "10"
+    },
+    domProps: {
+      value: _vm.review.content
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.review, "content", $event.target.value);
       }
-    })], 1)]), _vm._v(" "), _c("div", {
-      staticClass: "row"
-    }, [_c("div", {
-      staticClass: "col-md-12"
-    }, [_vm._v(_vm._s(_vm._f("fromNow")(review.created_at)))])]), _vm._v(" "), _c("div", {
-      staticClass: "row pt-4 pb-4"
-    }, [_c("div", {
-      staticClass: "col-md-12"
-    }, [_vm._v(_vm._s(review.content))])])]);
-  }), 0)]);
+    }
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-lg btn-primary btn-block"
+  }, [_vm._v("Submit")])]);
 };
 
 var staticRenderFns = [];
@@ -5953,13 +5955,12 @@ var render = function render() {
     staticClass: "text-muted"
   }, [_vm._v("Select the star rating (1 is worst - 5 is best)")]), _vm._v(" "), _c("star-rating", {
     staticClass: "fa-3x",
-    attrs: {
-      rating: _vm.review.rating
-    },
-    on: {
-      "rating:changed": function ratingChanged($event) {
-        _vm.review.rating = $event;
-      }
+    model: {
+      value: _vm.review.rating,
+      callback: function callback($$v) {
+        _vm.$set(_vm.review, "rating", $$v);
+      },
+      expression: "review.rating"
     }
   })], 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("button", {
     staticClass: "btn btn-lg btn-primary btn-block"
@@ -6015,7 +6016,7 @@ var render = function render() {
       staticClass: "fas fa-star",
       on: {
         click: function click($event) {
-          return _vm.$emit("rating:changed", star);
+          return _vm.$emit("input", star);
         }
       }
     });
@@ -6027,7 +6028,7 @@ var render = function render() {
       staticClass: "far fa-star",
       on: {
         click: function click($event) {
-          return _vm.$emit("rating:changed", _vm.fullStars + star);
+          return _vm.$emit("input", _vm.fullStars + star);
         }
       }
     });
