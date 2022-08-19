@@ -5570,6 +5570,20 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
     twoColumns: function twoColumns() {
       return this.loading || !this.alreadyReviewed;
     }
+  },
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post("/api/reviews", this.review).then(function (response) {
+        return console.log(response);
+      })["catch"](function (err) {
+        return _this2.error = true;
+      }).then(function () {
+        return _this2.loading = false;
+      });
+    }
   }
 });
 
@@ -6067,7 +6081,16 @@ var render = function render() {
       }
     }
   })]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-lg btn-primary btn-block"
+    staticClass: "btn btn-lg btn-primary btn-block",
+    attrs: {
+      disabled: _vm.loading
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.submit.apply(null, arguments);
+      }
+    }
   }, [_vm._v("Submit")])])])])])]);
 };
 
