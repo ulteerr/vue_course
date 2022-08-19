@@ -1,32 +1,51 @@
 <template>
-  <div>
-    <div class="form-group">
-      <label class="text-muted">Select the star rating (1 is worst - 5 is best)</label>
-      <star-rating class="fa-3x" v-model="review.rating"></star-rating>
-    </div>
-    <div class="form-group">
-      <label for="content" class="text-muted">Describe your expirience with</label>
-      <textarea name="content" cols="30" rows="10" class="form-control" v-model="review.content"></textarea>
-    </div>
+  <div style="padding: 1.25rem">
+    <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">Review List</h6>
 
-    <button class="btn btn-lg btn-primary btn-block">Submit</button>
+    <div v-if="loading">Loading...</div>
+    <div v-else>
+      <div class="border-bottom d-none d-md-block" v-for="(review, index) in reviews" :key="index">
+        <div class="row pt-4">
+          <div class="col-md-6">Piotr Jura</div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <star-rating :value="review.rating" class="fa-lg"></star-rating>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">{{ review.created_at | fromNow }}</div>
+        </div>
+        <div class="row pt-4 pb-4">
+          <div class="col-md-12">{{ review.content }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+// import moment from "moment";
+
 export default {
+  props: {
+    bookableId: [String, Number]
+  },
   data() {
     return {
-      review: {
-        rating: 5,
-        content: null
-      }
+      loading: false,
+      reviews: null
     };
   },
   created() {
-    // 1. If review already exists (in reviews table by id)
-    // 2. Fetch a booking by a review key
-    // 3. Store the review
+    this.loading = true;
+    axios
+      .get(`/api/bookables/${this.bookableId}/reviews`)
+      .then(response => (this.reviews = response.data.data))
+      .then(() => (this.loading = false));
   }
+  // filters: {
+  //   fromNow(value) {
+  //     return moment(value).fromNow();
+  //   }
+  // }
 };
 </script>
