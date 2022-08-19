@@ -5512,32 +5512,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './../shared/utils/response'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       review: {
+        id: null,
         rating: 5,
         content: null
       },
       existingReview: null,
       loading: false,
-      booking: null
+      booking: null,
+      error: false
     };
   },
   created: function created() {
     var _this = this;
 
+    this.review.id = this.$route.params.id;
     this.loading = true; // 1. If review already exists (in reviews table by id)
 
-    axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
+    axios.get("/api/reviews/".concat(this.review.id)).then(function (response) {
       _this.existingReview = response.data.data;
     })["catch"](function (err) {
-      if (err.response && err.response.status && 404 === err.response.status) {
+      if (Object(function webpackMissingModule() { var e = new Error("Cannot find module './../shared/utils/response'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(err)) {
         // 2. Fetch a booking by a review key
-        return axios.get("/api/booking-by-review/".concat(_this.$route.params.id)).then(function (response) {
+        return axios.get("/api/booking-by-review/".concat(_this.review.id)).then(function (response) {
           _this.booking = response.data.data;
+        })["catch"](function (err) {
+          // is404(err) ? {} : (this.error = true);
+          _this.error = !Object(function webpackMissingModule() { var e = new Error("Cannot find module './../shared/utils/response'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(err); // if (!is404(err)) {
+          //   this.error = true;
+          // }
         });
       }
+
+      _this.error = true;
     }).then(function () {
       _this.loading = false;
     }); // 3. Store the review
@@ -5551,6 +5563,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     hasBooking: function hasBooking() {
       return this.booking !== null;
+    },
+    oneColumn: function oneColumn() {
+      return !this.loading && this.alreadyReviewed;
+    },
+    twoColumns: function twoColumns() {
+      return this.loading || !this.alreadyReviewed;
     }
   }
 });
@@ -5976,19 +5994,21 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
+  return _c("div", [_vm.error ? _c("div", {
+    staticClass: "row"
+  }, [_vm._v("Unknown error has occured, please try again later!")]) : _c("div", {
     staticClass: "row"
   }, [_c("div", {
     "class": [{
-      "col-md-4": _vm.loading || !_vm.alreadyReviewed
+      "col-md-4": _vm.twoColumns
     }, {
-      "d-none": !_vm.loading && _vm.alreadyReviewed
+      "d-none": _vm.oneColumn
     }]
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-body"
-  }, [_vm.loading ? _c("div", [_vm._v("Loading...")]) : _c("div", [_c("p", [_vm._v("\n            Stayed at\n            "), _c("router-link", {
+  }, [_vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e(), _vm._v(" "), _vm.hasBooking ? _c("div", [_c("p", [_vm._v("\n              Stayed at\n              "), _c("router-link", {
     attrs: {
       to: {
         name: "bookable",
@@ -5997,11 +6017,11 @@ var render = function render() {
         }
       }
     }
-  }, [_vm._v(_vm._s(_vm.booking.bookable.title))])], 1), _vm._v(" "), _c("p", [_vm._v("From " + _vm._s(_vm.booking.from) + " to " + _vm._s(_vm.booking.to))])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.booking.bookable.title))])], 1), _vm._v(" "), _c("p", [_vm._v("From " + _vm._s(_vm.booking.from) + " to " + _vm._s(_vm.booking.to))])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     "class": [{
-      "col-md-8": _vm.loading || !_vm.alreadyReviewed
+      "col-md-8": _vm.twoColumns
     }, {
-      "col-md-12": !_vm.loading && _vm.alreadyReviewed
+      "col-md-12": _vm.oneColumn
     }]
   }, [_vm.loading ? _c("div", [_vm._v("Loading...")]) : _c("div", [_vm.alreadyReviewed ? _c("div", [_c("h3", [_vm._v("You've already left a review for this booking!")])]) : _c("div", [_c("div", {
     staticClass: "form-group"
@@ -6048,7 +6068,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-lg btn-primary btn-block"
-  }, [_vm._v("Submit")])])])])]);
+  }, [_vm._v("Submit")])])])])])]);
 };
 
 var staticRenderFns = [];
@@ -11448,10 +11468,10 @@ defineJQueryPlugin(Toast);
 
 /***/ }),
 
-/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11459,11 +11479,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\nlabel[data-v-39d99139] {\n  font-size: 0.7rem;\n  text-transform: uppercase;\n  color: gray;\n  font-weight: bolder;\n}\n.is-invalid[data-v-39d99139] {\n  border-color: #b22222;\n  background-image: none;\n}\n.invalid-feedback[data-v-39d99139] {\n  color: #b22222;\n}\n", ""]);
 // Exports
@@ -11472,10 +11492,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\nlabel[data-v-39d99139] {\n  font-siz
 
 /***/ }),
 
-/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js ***!
-  \******************************************************************************/
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -50557,10 +50577,10 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -50570,7 +50590,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&");
 
             
 
@@ -50579,11 +50599,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -51434,7 +51454,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Availability_vue_vue_type_style_index_0_id_39d99139_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/bookable/Availability.vue?vue&type=style&index=0&id=39d99139&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -54785,7 +54805,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "watchSyncEffect": () => (/* binding */ watchSyncEffect)
 /* harmony export */ });
 /*!
- * Vue.js v2.7.8
+ * Vue.js v2.7.9
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -55435,13 +55455,13 @@ if (true) {
             'referenced during render. Make sure that this property is reactive, ' +
             'either in the data option, or for class-based components, by ' +
             'initializing the property. ' +
-            'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
+            'See: https://v2.vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
     };
     var warnReservedPrefix_1 = function (target, key) {
         warn$2("Property \"".concat(key, "\" must be accessed with \"$data.").concat(key, "\" because ") +
             'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
             'prevent conflicts with Vue internals. ' +
-            'See: https://vuejs.org/v2/api/#data', target);
+            'See: https://v2.vuejs.org/v2/api/#data', target);
     };
     var hasProxy_1 = typeof Proxy !== 'undefined' && isNative(Proxy);
     if (hasProxy_1) {
@@ -58184,8 +58204,7 @@ function doWatch(source, cb, _a) {
     var oldValue = isMultiSource ? [] : INITIAL_WATCHER_VALUE;
     // overwrite default run
     watcher.run = function () {
-        if (!watcher.active &&
-            !(flush === 'pre' && instance && instance._isBeingDestroyed)) {
+        if (!watcher.active) {
             return;
         }
         if (cb) {
@@ -58759,17 +58778,21 @@ var onBeforeUpdate = createLifeCycle('beforeUpdate');
 var onUpdated = createLifeCycle('updated');
 var onBeforeUnmount = createLifeCycle('beforeDestroy');
 var onUnmounted = createLifeCycle('destroyed');
-var onErrorCaptured = createLifeCycle('errorCaptured');
 var onActivated = createLifeCycle('activated');
 var onDeactivated = createLifeCycle('deactivated');
 var onServerPrefetch = createLifeCycle('serverPrefetch');
 var onRenderTracked = createLifeCycle('renderTracked');
 var onRenderTriggered = createLifeCycle('renderTriggered');
+var injectErrorCapturedHook = createLifeCycle('errorCaptured');
+function onErrorCaptured(hook, target) {
+    if (target === void 0) { target = currentInstance; }
+    injectErrorCapturedHook(hook, target);
+}
 
 /**
  * Note: also update dist/vue.runtime.mjs when adding new exports to this file.
  */
-var version = '2.7.8';
+var version = '2.7.9';
 /**
  * @internal type is manually declared in <root>/types/v3-define-component.d.ts
  */
@@ -58828,11 +58851,16 @@ var uid$1 = 0;
  */
 var Watcher = /** @class */ (function () {
     function Watcher(vm, expOrFn, cb, options, isRenderWatcher) {
-        recordEffectScope(this, activeEffectScope || (vm ? vm._scope : undefined));
-        if ((this.vm = vm)) {
-            if (isRenderWatcher) {
-                vm._watcher = this;
-            }
+        recordEffectScope(this, 
+        // if the active effect scope is manually created (not a component scope),
+        // prioritize it
+        activeEffectScope && !activeEffectScope._vm
+            ? activeEffectScope
+            : vm
+                ? vm._scope
+                : undefined);
+        if ((this.vm = vm) && isRenderWatcher) {
+            vm._watcher = this;
         }
         // options
         if (options) {
@@ -59103,7 +59131,7 @@ function initData(vm) {
         data = {};
          true &&
             warn$2('data functions should return an object:\n' +
-                'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
+                'https://v2.vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
     }
     // proxy data on instance
     var keys = Object.keys(data);
@@ -59401,6 +59429,7 @@ function initMixin$1(Vue) {
         vm.__v_skip = true;
         // effect scope
         vm._scope = new EffectScope(true /* detached */);
+        vm._scope._vm = true;
         // merge options
         if (options && options._isComponent) {
             // optimize internal component instantiation
@@ -61954,7 +61983,16 @@ function normalizeDirectives(dirs, vm) {
         }
         res[getRawDirName(dir)] = dir;
         if (vm._setupState && vm._setupState.__sfc) {
-            dir.def = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+            var setupDef = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+            if (typeof setupDef === 'function') {
+                dir.def = {
+                    bind: setupDef,
+                    update: setupDef,
+                };
+            }
+            else {
+                dir.def = setupDef;
+            }
         }
         dir.def = dir.def || resolveAsset(vm.$options, 'directives', dir.name, true);
     }
@@ -66596,7 +66634,7 @@ Vue.compile = compileToFunctions;
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*!
- * Vue.js v2.7.8
+ * Vue.js v2.7.9
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -67251,13 +67289,13 @@ Vue.compile = compileToFunctions;
               'referenced during render. Make sure that this property is reactive, ' +
               'either in the data option, or for class-based components, by ' +
               'initializing the property. ' +
-              'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
+              'See: https://v2.vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
       };
       var warnReservedPrefix_1 = function (target, key) {
           warn$2("Property \"".concat(key, "\" must be accessed with \"$data.").concat(key, "\" because ") +
               'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
               'prevent conflicts with Vue internals. ' +
-              'See: https://vuejs.org/v2/api/#data', target);
+              'See: https://v2.vuejs.org/v2/api/#data', target);
       };
       var hasProxy_1 = typeof Proxy !== 'undefined' && isNative(Proxy);
       if (hasProxy_1) {
@@ -69979,8 +70017,7 @@ Vue.compile = compileToFunctions;
       var oldValue = isMultiSource ? [] : INITIAL_WATCHER_VALUE;
       // overwrite default run
       watcher.run = function () {
-          if (!watcher.active &&
-              !(flush === 'pre' && instance && instance._isBeingDestroyed)) {
+          if (!watcher.active) {
               return;
           }
           if (cb) {
@@ -70543,17 +70580,21 @@ Vue.compile = compileToFunctions;
   var onUpdated = createLifeCycle('updated');
   var onBeforeUnmount = createLifeCycle('beforeDestroy');
   var onUnmounted = createLifeCycle('destroyed');
-  var onErrorCaptured = createLifeCycle('errorCaptured');
   var onActivated = createLifeCycle('activated');
   var onDeactivated = createLifeCycle('deactivated');
   var onServerPrefetch = createLifeCycle('serverPrefetch');
   var onRenderTracked = createLifeCycle('renderTracked');
   var onRenderTriggered = createLifeCycle('renderTriggered');
+  var injectErrorCapturedHook = createLifeCycle('errorCaptured');
+  function onErrorCaptured(hook, target) {
+      if (target === void 0) { target = currentInstance; }
+      injectErrorCapturedHook(hook, target);
+  }
 
   /**
    * Note: also update dist/vue.runtime.mjs when adding new exports to this file.
    */
-  var version = '2.7.8';
+  var version = '2.7.9';
   /**
    * @internal type is manually declared in <root>/types/v3-define-component.d.ts
    */
@@ -70613,12 +70654,12 @@ Vue.compile = compileToFunctions;
     onUpdated: onUpdated,
     onBeforeUnmount: onBeforeUnmount,
     onUnmounted: onUnmounted,
-    onErrorCaptured: onErrorCaptured,
     onActivated: onActivated,
     onDeactivated: onDeactivated,
     onServerPrefetch: onServerPrefetch,
     onRenderTracked: onRenderTracked,
-    onRenderTriggered: onRenderTriggered
+    onRenderTriggered: onRenderTriggered,
+    onErrorCaptured: onErrorCaptured
   });
 
   var seenObjects = new _Set();
@@ -70672,11 +70713,16 @@ Vue.compile = compileToFunctions;
    */
   var Watcher = /** @class */ (function () {
       function Watcher(vm, expOrFn, cb, options, isRenderWatcher) {
-          recordEffectScope(this, activeEffectScope || (vm ? vm._scope : undefined));
-          if ((this.vm = vm)) {
-              if (isRenderWatcher) {
-                  vm._watcher = this;
-              }
+          recordEffectScope(this, 
+          // if the active effect scope is manually created (not a component scope),
+          // prioritize it
+          activeEffectScope && !activeEffectScope._vm
+              ? activeEffectScope
+              : vm
+                  ? vm._scope
+                  : undefined);
+          if ((this.vm = vm) && isRenderWatcher) {
+              vm._watcher = this;
           }
           // options
           if (options) {
@@ -70944,7 +70990,7 @@ Vue.compile = compileToFunctions;
       if (!isPlainObject(data)) {
           data = {};
           warn$2('data functions should return an object:\n' +
-                  'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
+                  'https://v2.vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
       }
       // proxy data on instance
       var keys = Object.keys(data);
@@ -71240,6 +71286,7 @@ Vue.compile = compileToFunctions;
           vm.__v_skip = true;
           // effect scope
           vm._scope = new EffectScope(true /* detached */);
+          vm._scope._vm = true;
           // merge options
           if (options && options._isComponent) {
               // optimize internal component instantiation
@@ -73789,7 +73836,16 @@ Vue.compile = compileToFunctions;
           }
           res[getRawDirName(dir)] = dir;
           if (vm._setupState && vm._setupState.__sfc) {
-              dir.def = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+              var setupDef = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+              if (typeof setupDef === 'function') {
+                  dir.def = {
+                      bind: setupDef,
+                      update: setupDef,
+                  };
+              }
+              else {
+                  dir.def = setupDef;
+              }
           }
           dir.def = dir.def || resolveAsset(vm.$options, 'directives', dir.name, true);
       }
@@ -78446,7 +78502,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
+module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"/var/www/vue_course.su","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 
