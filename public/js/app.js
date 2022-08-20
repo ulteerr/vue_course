@@ -2219,6 +2219,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2245,23 +2251,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       _this.loading = false;
     });
   },
-  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
-    lastSearch: "lastSearch",
-    inBasketAlready: function inBasketAlready(state) {
-      var _this2 = this;
-
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
+    lastSearch: "lastSearch"
+  })), {}, {
+    inBasketAlready: function inBasketAlready() {
       if (null === this.bookable) {
         return false;
       }
 
-      return state.basket.items.reduce(function (result, item) {
-        return result || item.bookable.id === _this2.bookable.id;
-      }, false);
+      return this.$store.getters.inBasketAlready(this.bookable.id);
     }
   }),
   methods: {
     checkPrice: function checkPrice(hasAvailability) {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -2273,23 +2276,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this3.price = null;
+                _this2.price = null;
                 return _context.abrupt("return");
 
               case 3:
                 _context.prev = 3;
                 _context.next = 6;
-                return axios.get("/api/bookables/".concat(_this3.bookable.id, "/price?from=").concat(_this3.lastSearch.from, "&to=").concat(_this3.lastSearch.to));
+                return axios.get("/api/bookables/".concat(_this2.bookable.id, "/price?from=").concat(_this2.lastSearch.from, "&to=").concat(_this2.lastSearch.to));
 
               case 6:
-                _this3.price = _context.sent.data.data;
+                _this2.price = _context.sent.data.data;
                 _context.next = 12;
                 break;
 
               case 9:
                 _context.prev = 9;
                 _context.t0 = _context["catch"](3);
-                _this3.price = null;
+                _this2.price = null;
 
               case 12:
               case "end":
@@ -3579,6 +3582,13 @@ __webpack_require__.r(__webpack_exports__);
   getters: {
     itemsInBasket: function itemsInBasket(state) {
       return state.basket.items.length;
+    },
+    inBasketAlready: function inBasketAlready(state) {
+      return function (id) {
+        return state.basket.items.reduce(function (result, item) {
+          return result || item.bookable.id === id;
+        }, false);
+      };
     }
   }
 });
