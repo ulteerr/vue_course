@@ -2753,9 +2753,7 @@ var render = function render() {
 
   return _c("div", [_c("div", {
     staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-8"
-  }, [_vm._v("Checkout form")]), _vm._v(" "), _c("div", {
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "col-md-4"
   }, [_c("div", {
     staticClass: "d-flex justify-content-between"
@@ -2763,14 +2761,164 @@ var render = function render() {
     staticClass: "text-uppercase text-secondary font-weight-bolder"
   }, [_vm._v("Your Cart")]), _vm._v(" "), _c("h6", {
     staticClass: "badge badge-secondary text-uppercase"
-  }, [_vm.itemsInBasket ? _c("span", [_vm._v("Items " + _vm._s(_vm.itemsInBasket))]) : _c("span", [_vm._v("Empty")])])]), _vm._v(" "), _vm._l(_vm.basket, function (item) {
+  }, [_vm.itemsInBasket ? _c("span", [_vm._v("Items " + _vm._s(_vm.itemsInBasket))]) : _c("span", [_vm._v("Empty")])])]), _vm._v(" "), _c("transition-group", {
+    attrs: {
+      name: "fade"
+    }
+  }, _vm._l(_vm.basket, function (item) {
     return _c("div", {
       key: item.bookable.id
-    });
-  })], 2)])]);
+    }, [_c("div", {
+      staticClass: "pt-2 pb-2 border-top d-flex justify-content-between"
+    }, [_c("span", [_c("router-link", {
+      attrs: {
+        to: {
+          name: "bookable",
+          params: {
+            id: item.bookable.id
+          }
+        }
+      }
+    }, [_vm._v(_vm._s(item.bookable.title))])], 1), _vm._v(" "), _c("span", {
+      staticClass: "font-weight-bold"
+    }, [_vm._v("$" + _vm._s(item.price.total))])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 pb-2 d-flex justify-content-between"
+    }, [_c("span", [_vm._v("From " + _vm._s(item.dates.from))]), _vm._v(" "), _c("span", [_vm._v("To " + _vm._s(item.dates.to))])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 pb-2 text-right"
+    }, [_c("button", {
+      staticClass: "btn btn-sm btn-outline-secondary",
+      on: {
+        click: function click($event) {
+          return _vm.$store.dispatch("removeFromBasket", item.bookable.id);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-trash-alt"
+    })])])]);
+  }), 0)], 1)])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "col-md-8"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "first_names"
+    }
+  }, [_vm._v("First names")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "first_names"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "last_name"
+    }
+  }, [_vm._v("Last name")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "last_name"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "email"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "street"
+    }
+  }, [_vm._v("Street")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "street"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "city"
+    }
+  }, [_vm._v("City")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "city"
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "country"
+    }
+  }, [_vm._v("Country")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "country"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "state"
+    }
+  }, [_vm._v("State")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "state"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2 form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "zip"
+    }
+  }, [_vm._v("Zip")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "zip"
+    }
+  })])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-lg btn-primary btn-block",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Book now!")])])])]);
+}];
 render._withStripped = true;
 
 
@@ -3670,7 +3818,9 @@ __webpack_require__.r(__webpack_exports__);
       commit('addToBasket', payload);
       localStorage.setItem('basket', JSON.stringify(state.basket));
     },
-    removeFromBasket: function removeFromBasket() {
+    removeFromBasket: function removeFromBasket(_ref2, payload) {
+      var commit = _ref2.commit,
+          state = _ref2.state;
       commit('removeFromBasket', payload);
       localStorage.setItem('basket', JSON.stringify(state.basket));
     }
@@ -8073,7 +8223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nh6.badge[data-v-9d55657e] {\n  font-size: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nh6.badge[data-v-9d55657e] {\n  font-size: 100%;\n}\na[data-v-9d55657e] {\n  color: black;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
