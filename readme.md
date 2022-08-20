@@ -1,1 +1,0 @@
-Full source code of the "Master Laravel 6 with Vue.js Fullstack Development" course on Udemy.
