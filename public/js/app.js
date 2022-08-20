@@ -2204,6 +2204,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _register = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2212,38 +2213,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.errors = null;
                 _context.prev = 2;
                 _context.next = 5;
-                return axios.get("/sanctum/csrf-cookie");
+                return axios.post("/register", this.user);
 
               case 5:
-                _context.next = 7;
-                return axios.post("/login", {
-                  email: this.email,
-                  password: this.password
-                });
+                response = _context.sent;
 
-              case 7:
-                Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_2__["logIn"])();
-                this.$store.dispatch("loadUser");
-                this.$router.push({
-                  name: "home"
-                });
-                _context.next = 15;
+                if (201 == response.status) {
+                  Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_2__["logIn"])();
+                  this.$store.dispatch("loadUser");
+                  this.$router.push({
+                    name: "home"
+                  });
+                }
+
+                _context.next = 12;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](2);
                 this.errors = _context.t0.response && _context.t0.response.data.errors;
 
-              case 15:
+              case 12:
                 this.loading = false;
 
-              case 16:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 12]]);
+        }, _callee, this, [[2, 9]]);
       }));
 
       function register() {
@@ -59254,7 +59253,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "row pt-4" }, [
                   _c("div", { staticClass: "col-md-6" }, [
-                    _vm._v("Piotr Jura")
+                    _vm._v("Igor Libukin")
                   ]),
                   _vm._v(" "),
                   _c(
