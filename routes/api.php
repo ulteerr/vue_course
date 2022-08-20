@@ -26,3 +26,6 @@ Route::get('/booking-by-review/{reviewKey}', '\App\Http\Controllers\Api\BookingB
 Route::get('bookables/{bookable}/price', '\App\Http\Controllers\Api\BookablePriceController')
     ->name('bookables.price.show');
 Route::apiResource('reviews', '\App\Http\Controllers\Api\ReviewController')->only(['show', 'store']);
+
+
+Route::post('checkout', 'Api\CheckoutController')->name('checkout');
