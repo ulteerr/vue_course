@@ -1,5 +1,5 @@
 require("./bootstrap");
-import Vue from "vue";
+
 import moment from "moment";
 import VueRouter from "vue-router";
 import Vuex from 'vuex';
@@ -11,7 +11,7 @@ import Success from "./shared/components/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
 import storeDefinition from "./store";
 
-window.Vue = require("vue/dist/vue.js");
+window.Vue = require("vue");
 Vue.use(VueRouter);
 Vue.use(Vuex);
 

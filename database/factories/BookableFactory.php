@@ -1,34 +1,27 @@
 <?php
 
-namespace Database\Factories;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Bookable;
+use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 
-class BookableFactory extends Factory
-{
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
-    {
-        $suffix = [
-            'Villa',
-            'House',
-            'Cottage',
-            'Luxury Villas',
-            'Cheap House',
-            'Rooms',
-            'Cheap Rooms',
-            'Luxury Rooms',
-            'Fancy rooms'
-        ];
-        return [
-            'title' => $this->faker->city .' ' . Arr::random($suffix),
-            'description' => $this->faker->text(),
-            'price' => random_int(15, 600)
-        ];
-    }
-}
+$suffix = [
+    'Villa',
+    'House',
+    'Cottage',
+    'Luxury Villas',
+    'Cheap House',
+    'Rooms',
+    'Cheap Rooms',
+    'Luxury Rooms',
+    'Fancy Rooms'
+];
+
+$factory->define(Bookable::class, function (Faker $faker) use ($suffix) {
+    return [
+        'title' => $faker->city . ' ' . Arr::random($suffix),
+        'description' => $faker->text(),
+        'price' => random_int(15, 600)
+    ];
+});

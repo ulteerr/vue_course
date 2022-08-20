@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Booking;
+use App\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingByReviewShowResource;
 use Illuminate\Http\Request;

@@ -1,11 +1,8 @@
 <?php
 
-namespace Database\Seeders;
-
-use App\Models\Bookable;
+use App\Bookable;
+use App\Booking;
 use Illuminate\Database\Seeder;
-use App\Models\Booking;
-
 
 class BookingsTableSeeder extends Seeder
 {
@@ -16,9 +13,8 @@ class BookingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
         Bookable::all()->each(function (Bookable $bookable) {
-            $booking = Booking::factory()->create(); 
+            $booking = factory(Booking::class)->make();
             $bookings = collect([$booking]);
 
             for ($i = 0; $i < random_int(1, 20); $i++) {

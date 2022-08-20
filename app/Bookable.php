@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class Bookable extends Model
 {
-    use HasFactory;
     public function bookings()
     {
         return $this->hasMany(Booking::class);

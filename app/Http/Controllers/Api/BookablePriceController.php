@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Bookable;
+use App\Bookable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

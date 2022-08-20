@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Address;
-use App\Models\Bookable;
-use App\Models\Booking;
+use App\Address;
+use App\Bookable;
+use App\Booking;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
